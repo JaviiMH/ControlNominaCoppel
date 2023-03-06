@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div id="app">
+        {{message}}
+    </div>
+</div>
+@section Scripts{ 
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            message:"hola mundo desde vue"
+        }
+
+    })
+</script>
+}

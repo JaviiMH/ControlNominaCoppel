@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "Captura Movimientos Empleado";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div id="app">
+        <template>
+            <div class="row col m-4">
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-sm-right pr-0">
+                            <b>Numero de Empleado:</b>
+                        </label>
+                        <div class="col-2">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="numEmpleado"
+                                   id="txtNumEmpleado"
+                                   tabindex="1"
+                                   placeholder="Numero Empleado..">
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-block text-center m-2">
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-sm-right pr-0"><b>Nombre del Empleado:</b></label>
+                        <div class="col-8">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="nomEmpleado"
+                                   tabindex="1"
+                                   placeholder="Nombre del Empleado">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-sm-right pr-0"><b>Rol de Trabajo:</b></label>
+                        <div class="col-3">
+                            <select class="form-control form-control-sm input-select"
+                                    v-model="rolId">
+                                <option :value="0" disabled>Seleccione...</option>
+                                <option :key="index"
+                                        :value="c.rolId"
+                                        v-for="(c, index) in roles">
+                                    {{ c.rolName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtpublicacion"
+                               class="col-3 col-form-label text-sm-right pr-0"><b>Mes:</b></label>
+                        <div class="col-3">
+                            <select class="form-control form-control-sm input-select"
+                                    v-model="fechaIni">
+                                <option :value="0" disabled>Seleccione...</option>
+                                <option :key="index"
+                                        :value="c.idMes"
+                                        v-for="(c, index) in meses">
+                                    {{ c.mes }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-sm-right pr-0"><b>Cantidad de Entregas:</b></label>
+                        <div class="col-3">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="numEntregas"
+                                   tabindex="1">
+                        </div>
+                    </div>
+
+                    <div class="pt-3 form-group row">
+
+                        <div class="col-11 d-flex justify-content-end">
+                            <button class=" btn btn-info mr-1"
+                                    v-on:click="GuardarMovimiento()">
+                                Guardar
+                            </button>
+                            <button class=" btn btn-primary">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+@section Scripts{
+<script>
+    var app = new Vue({
+        el: "#app",
+        data() {
+
+            return {
+                idCategoriaSeleccionada: 0,
+                meses: [{ idMes: 1, mes: "Enero" }, { idMes: 2, mes: "Febrero" }, { idMes: 3, mes: "Marzo" }, { idMes: 4, mes: "Abril" },
+                { idMes: 5, mes: "Mayo" }, { idMes: 6, mes: "Junio" }, { idMes: 7, mes: "Julio" }, { idMes: 8, mes: "Agosto" },
+                { idMes: 9, mes: "Septiembre" }, { idMes: 10, mes: "Octubre" }, { idMes: 11, mes: "Noviembre" }, { idMes: 12, mes: "Diciembre" }],
+                roles: [{ rolId: 1, rolName: 'Chofer' }, { rolId: 2, rolName: 'Cargador' }, { rolId: 3, rolName: 'Auxiliar' }],
+                file: [],
+                url: null,
+                message: "hola mundo desde vue",
+                rbRol: true,
+                numEmpleado: '',
+                nomEmpleado: '',
+                rolId: '',
+                fechaIni: '',
+                numEntregas:''
+
+            }
+        },
+        methods: {
+
+            GuardarMovimiento: function () {
+                var self = this;
+                if (self.empleado) {
+                    var data = {
+                        NumEmpleado: self.empleado.numEmpleado,
+                        Nombre_empleado: self.empleado.nombreEmpleado,
+                        RolId: self.empleado.rolId
+                    }
+                    this.$http.get('../Empleados/GuardarCapturaMovimientoEmpleado', data).then(function (response) {
+                        alert('Se ha guardado el empleado correctamente!!');
+                    }, function () {
+                        alert('Error al guardar empleado !!');
+                    });
+
+                } else {
+                    alert('favor de introducir valores!!');
+                }
+
+            },
+        }
+
+    })
+</script>
+}

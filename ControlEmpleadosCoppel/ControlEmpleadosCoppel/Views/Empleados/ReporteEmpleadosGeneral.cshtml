@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "ReporteEmpleadosGeneral";
+}
+@*@Html.Partial("Barra")*@
+<div class="cabez">
+
+    <label>Reporte Movimientos por Empleado</label>
+</div>
+<div id="app">
+    <div class="col-12  form-group row">
+
+        <div class="col-6 form-group row">
+            <div class="col-6">
+                <label for="exampleFormControlSelect2">FECHA INICIO</label>
+                <input type="date" class="form-control" id="fecIni" v-model="fechaIni" />
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlSelect2">FECHA FIN</label>
+                <input type="date" class="form-control" id="fecFin" v-model="fechaFin" />
+            </div>
+        </div>
+
+        <div class="col-6 form-group row" style=" margin-top: 1%;">
+
+            <div class="col-4"> </div>
+            <div class="col-4">
+                <button class="btn btn-primary" style="margin:4% 4% 4% 4%" id="btn-buscar" v-on:click="ConsultarReporte()"><i class="glyphicon glyphicon-search "></i> BUSCAR</button>
+
+            </div>
+            <div class="col-4">
+                <button class="btn btn-danger" style="margin:4% 4% 4% 4%" id="btn-clean"><i class="	glyphicon glyphicon-trash"></i> LIMPIAR</button>
+
+            </div>
+
+        </div>
+    </div>
+    <BR>
+    <div class="row">
+        <div class="col-xs-12 col-md-12" id="tablaContenido" style="height:680px;overflow:auto;width:100%">
+            <div class="col-xs-12 col-md-12" id="tablaContenido">
+                <table class="table table-responsive table-bordered table-hover table-dark" id="table2excel" style="width:100%">
+                    <thead>
+                        <tr class="">
+                            <th scope="col">NUMERO DE EMPLEADO</th>
+                            <th scope="col">NOMBRE EMPLEADO</th>
+                            <th scope="col">ROL</th>
+                            <th scope="col">HORAS TRABAJADAS </th>
+                            <th scope="col">PAGO TOTAL ENTREGAS</th>
+                            <th scope="col">PAGO TOTAL BONOS</th>
+                            <th scope="col">RETENCIONES</th>
+                            <th scope="col">VALES</th>
+                            <th scope="col">SUELDO TOTAL</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="datosVentas">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  
+</div>
+    @section Scripts{
+
+        <script>
+
+            var app = new Vue({
+                el: "#app",
+                data() {
+
+                    return {
+                        idCategoriaSeleccionada: 0,
+                        fechaIni: '',
+                        fechaFin: '',
+                        file: [],
+                        url: null,
+                        message: "hola mundo desde vue",
+                        rbRol: true
+                    }
+                },
+                methods: {
+
+                    vistaPrevia() {
+                        this.$bvModal.show('modal-vista-previa')
+                    },
+                    ConsultarReporte: function () {
+                        var self = this;
+                        if (self.fechaIni != '' && self.fechaFin != '') {
+
+                            this.$http.get('../Empleados/ObtenerReporteEmpleadosGeneral?fechaIni=' + self.fechaIni + '&fechaFin=' + self.fechaFin).then(function (response) {
+                                alert('Se ha guardado el empleado correctamente!!');
+                            }, function () {
+                                alert(response);
+                            });
+
+                        } else {
+                            alert('favor de introducir valores!!');
+                        }
+
+                    },
+
+                }
+
+            });
+
+        </script>
+    }

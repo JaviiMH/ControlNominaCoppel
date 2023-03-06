@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "Alta Empleados";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div id="app">
+        <template>
+            <div class="row col m-4">
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-sm-right pr-0">
+                            <b>Numero de Empleado:</b>
+                        </label>
+                        <div class="col-8">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="empleado.numEmpleado"
+                                   id="txtNumero"
+                                 
+                                   tabindex="1"
+                                   placeholder="Numero Empleado">
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-block text-center m-2">
+                    <div class="form-group row">
+                        <label for="txtNombre"
+                               class="col-3 col-form-label text-sm-right pr-0"><b>Nombre del Empleado:</b></label>
+                        <div class="col-8">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="empleado.nombreEmpleado"
+                                   id="txtNombre"
+                                  
+                                   tabindex="1"
+                                   placeholder="Nombre del Empleado">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label 
+                               class="col-3 col-form-label text-sm-right pr-0"><b>Rol de Trabajo:</b></label>
+                        <div class="col-8">
+                            <section>
+                                <input type="radio" v-model="empleado.rolId" value="0">Chofer<br />
+                                <input type="radio" v-model="empleado.rolId" value="1">Cargador<br />
+                                <input type="radio" v-model="empleado.rolId" value="2">Auxiliar
+                             </section>
+                        </div>
+                    </div>
+                   
+                    <div class="pt-3 form-group row">
+
+                        <div class="col-11 d-flex justify-content-end">
+                            <button class=" btn btn-info mr-1"
+                                v-on:click="GuardarEmpleado()"   >
+                                Guardar
+                            </button>
+                            <button class=" btn btn-primary"
+                                 click="Cancelar"  >
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+@section Scripts{
+    <script>
+       
+        const  app = new Vue({
+        el: "#app",
+        data() {
+            
+            return {
+                idCategoriaSeleccionada: 0,
+                empleado: {
+                    numEmpleado: '',
+                    nombreEmpleado: '',
+                    rolId: 0
+                },
+                file: [],
+                url: null,
+                message: "hola mundo desde vue",
+                rbRol: true
+            }
+        },
+        methods: {
+            
+            GuardarEmpleado: function () {
+                var self = this;
+                if (self.empleado) {
+                    var data = {
+                        NumEmpleado: self.empleado.numEmpleado,
+                        Nombre_empleado: self.empleado.nombreEmpleado,
+                        RolId: self.empleado.rolId
+                    }
+                    this.$http.get('../Empleados/GuardarEmpleados', data).then(function (response) {
+                        alert('Se ha guardado el empleado correctamente!!');
+                    }, function () {
+                        alert('Error al guardar empleado !!');
+                    });
+                    
+                } else {
+                    alert('favor de introducir valores!!');
+                }
+                
+            },
+
+            Cancelar() {
+    
+            }
+        }
+
+    })
+    </script>
+}

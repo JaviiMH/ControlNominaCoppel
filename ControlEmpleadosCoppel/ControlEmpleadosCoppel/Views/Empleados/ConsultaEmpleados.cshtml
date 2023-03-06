@@ -1,0 +1,252 @@
+﻿@{
+    ViewData["Title"] = "Consulta Emppleados";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div id="app">
+        <template>
+            <div class="row col m-4">
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-sm-right pr-0">
+                            <b>Numero de Empleado:</b>
+                        </label>
+                        <div class="col-2">
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="numEmpleado"
+                                   id="txtNumEmpleado"
+                                  
+                                   tabindex="1"
+                                   placeholder="Numero Empleado..">
+                        </div>
+                        <label 
+                               class="col-2 col-form-label text-sm-right pr-0"><b>Mes:</b></label>
+                        <div class="col-3">
+                            <select class="form-control form-control-sm input-select"
+                                    v-model="fechaIni">
+                                <option :value="0" disabled>Seleccione...</option>
+                                <option :key="index"
+                                        :value="c.idMes"
+                                        v-for="(c, index) in meses">
+                                    {{ c.mes }}
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col d-block text-center m-2">
+                    <div class="form-group row">
+                        <label
+                               class="col-3 col-form-label text-sm-right pr-0"><b>Nombre del Empleado:</b></label>
+                        <div class="col-8">
+                            <input disabled type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="nomEmpleado"
+                                  
+                                  
+                                   tabindex="1"
+                                   placeholder="Nombre del Empleado">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label 
+                               class="col-3 col-form-label text-sm-right pr-0"><b>Rol de Trabajo:</b></label>
+                        <div class="col-3">
+                            <select disabled class="form-control form-control-sm input-select"
+                                    v-model="rolId">
+                                <option :value="0" disabled>Seleccione...</option>
+                                <option :key="index"
+                                        :value="c.rolId"
+                                        v-for="(c, index) in roles">
+                                    {{ c.rolName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label 
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Cantidad de Entregas:</b></label>
+                        <div class="col-3">
+                            <input disabled type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="numEntregas"
+                                  
+                                   tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label 
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Horas Trabajadas:</b></label>
+                        <div class="col-3">
+                            <input disabled type="text"
+                                   class="form-control form-control-sm"
+                                   v-model.trim="numHorasTrabajadas"
+                                  
+                                   tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Pago por Entregas:</b></label>
+                        <div class="col-3">
+                            <input type="text" disabled
+                                   class="form-control form-control-sm"
+                                   v-model.trim="pagoEntregas"
+                                  
+                                   tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label 
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Pago por Bonos:</b></label>
+                        <div class="col-3">
+                            <input type="text" disabled
+                                   class="form-control form-control-sm"
+                                   v-model.trim="pagoBonos"
+                                   
+                                   tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Retenciones:</b></label>
+                        <div class="col-3">
+                            <input type="text" disabled
+                                   class="form-control form-control-sm"
+                                   v-model.trim="retenciones"
+                                   
+                                   tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Vales:</b></label>
+                        <div class="col-3">
+                            <input type="text" disabled
+                                   class="form-control form-control-sm"
+                                   v-model.trim="vales"
+                                  
+                                   tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label 
+                               class="col-4 col-form-label text-sm-right pr-0"><b>Sueldo Total:</b></label>
+                        <div class="col-3">
+                            <input type="text" disabled
+                                   class="form-control form-control-sm"
+                                   v-model.trim="sueldoTotal"
+                                  
+                                   tabindex="1">
+                        </div>
+                    </div>
+
+                    <div class="pt-3 form-group row">
+
+                        <div class="col-11 d-flex justify-content-end">
+                            <button class=" btn btn-info mr-1"
+                                    v-on:click="ConsultarEmpleado()">
+                                Consultar
+                            </button>
+                            <button class=" btn btn-primary" v-on:click="limpiarDatos()">
+                                Borrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+@section Scripts{
+<script>
+
+    var app = new Vue({
+        el: "#app",
+        data() {
+
+            return {
+                idCategoriaSeleccionada: 0,
+                fechaIni: '',
+                numEmpleado: '',
+                meses: [{ idMes: 1, mes: "Enero" }, { idMes: 2, mes: "Febrero" }, { idMes: 3, mes: "Marzo" }, { idMes: 4, mes: "Abril" },
+                    { idMes: 5, mes: "Mayo" }, { idMes: 6, mes: "Junio" }, { idMes: 7, mes: "Julio" }, { idMes: 8, mes: "Agosto" },
+                    { idMes: 9, mes: "Septiembre" }, { idMes: 10, mes: "Octubre" }, { idMes: 11, mes: "Noviembre" }, { idMes: 12, mes: "Diciembre" }],
+                url: null,
+                message: "hola mundo desde vue",
+                rbRol: true,
+                sueldoTotal: '',
+                nomEmpleado: '',
+                roles: [{ rolId: 1, rolName: 'Chofer' }, { rolId: 2, rolName: 'Cargador' }, { rolId: 3, rolName: 'Auxiliar' }],
+                numEntregas: '',
+                numHorasTrabajadas: '',
+                pagoEntregas: '',
+                pagoBonos: '',
+                retenciones: '',
+                vales: '',
+                sueldoTotal: ''
+
+
+
+
+            }
+        },
+        methods: {
+
+            ConsultarEmpleado: function () {
+   
+                var self = this;
+                if (self.fechaIni != '' && self.numEmpleado != '') {
+
+                    this.$http.get('../Empleados/ConsultarEmpleados?NumEmpleado=' + self.numEmpleado + '&mes=' + self.fechaIni).then(function (response) {
+                        console.log(response.data[0])
+                        var data = response.data[0];
+                        if (response.data.length > 0) {
+                            self.numHorasTrabajadas = data.horasTrabajadas;
+                            self.nomEmpleado = data.nombre_empleado;
+                            self.numEmpleado = data.numEmpleado;
+                            self.pagoBonos = data.pagoTotalBonos;
+                            self.pagoTotalHoras = data.pagoTotalHoras;
+                            self.pagoEntregas = data.pagoTotalEntregas
+                            self.retenciones = data.retenciones;
+                            self.rolId = data.rolId;
+                            self.sueldoTotal = data.sueldoTotal;
+                            self.vales = data.vales;
+                            self.numEntregas = data.numMovimientos
+                        } else {
+                            alert("No se encontraron datos!!");
+                        }
+                    }, function () {
+                        alert("Ocurrió un error mientras se consultaba la información!!");
+                    });
+
+                } else {
+                    alert(self.numEmpleado == '' ? 'favor de introducir el número de empleado!!': 'Favor de seleccionar el mes');
+                }
+
+            },
+            limpiarDatos: function () {
+                var self = this;
+                self.numHorasTrabajadas = '';
+                self.nomEmpleado = '';
+                self.numEmpleado = '';
+                self.pagoBonos = '';
+                self.pagoTotalHoras = '';
+                self.pagoEntregas = '';
+                self.retenciones = '';
+                self.rolId = '';
+                self.sueldoTotal = '';
+                self.vales = '';
+                self.numEntregas = '';
+                self.fechaIni = '';
+            }
+        }
+
+    });
+
+</script>
+}
