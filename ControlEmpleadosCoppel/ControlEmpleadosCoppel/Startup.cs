@@ -52,7 +52,7 @@ namespace ControlEmpleadosCoppel
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Empleados}/{action=ReporteEmpleadosGeneral}/{id?}");
             });
         }
     }
