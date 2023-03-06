@@ -203,7 +203,7 @@
                 if (self.fechaIni != '' && self.numEmpleado != '') {
 
                     this.$http.get('../Empleados/ConsultarEmpleados?NumEmpleado=' + self.numEmpleado + '&mes=' + self.fechaIni).then(function (response) {
-                        console.log(response.data[0])
+                        
                         var data = response.data[0];
                         if (response.data.length > 0) {
                             self.numHorasTrabajadas = data.horasTrabajadas;

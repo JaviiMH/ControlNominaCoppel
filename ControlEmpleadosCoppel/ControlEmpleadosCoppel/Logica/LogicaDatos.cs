@@ -18,9 +18,9 @@ namespace ControlEmpleadosCoppel.Logica
             return DBCatalogos.ConsultaEmpleado(NumEmpleado, mes);
         }
        
-        public static DataTable ReporteMovimientosEmpleados(string fechaIni, string fechaFin)
+        public static DataTable ReporteMovimientosEmpleados(string fechaIni)
         {
-            return DBCatalogos.ReporteMovimientosEmpleados(fechaIni, fechaFin);
+            return DBCatalogos.ReporteMovimientosEmpleados(fechaIni);
         }
         [HttpGet]
         public static DataTable AltaEmpleados(EmpleadosModel empleado)

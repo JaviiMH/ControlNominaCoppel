@@ -12,11 +12,15 @@
         <div class="col-6 form-group row">
             <div class="col-6">
                 <label for="exampleFormControlSelect2">FECHA INICIO</label>
-                <input type="date" class="form-control" id="fecIni" v-model="fechaIni" />
-            </div>
-            <div class="col-6">
-                <label for="exampleFormControlSelect2">FECHA FIN</label>
-                <input type="date" class="form-control" id="fecFin" v-model="fechaFin" />
+                <select class="form-control form-control-sm input-select"
+                        v-model="fechaIni">
+                    <option :value="0" disabled>Seleccione...</option>
+                    <option :key="index"
+                            :value="c.idMes"
+                            v-for="(c, index) in meses">
+                        {{ c.mes }}
+                    </option>
+                </select>
             </div>
         </div>
 
@@ -28,7 +32,7 @@
 
             </div>
             <div class="col-4">
-                <button class="btn btn-danger" style="margin:4% 4% 4% 4%" id="btn-clean"><i class="	glyphicon glyphicon-trash"></i> LIMPIAR</button>
+                <button class="btn btn-danger" style="margin:4% 4% 4% 4%" id="btn-clean" v-on:click="limpiarDatos()"><i class="	glyphicon glyphicon-trash"></i> LIMPIAR</button>
 
             </div>
 
@@ -45,6 +49,7 @@
                             <th scope="col">NOMBRE EMPLEADO</th>
                             <th scope="col">ROL</th>
                             <th scope="col">HORAS TRABAJADAS </th>
+                            <th scope="col">PAGO TOTAL HORAS</th>
                             <th scope="col">PAGO TOTAL ENTREGAS</th>
                             <th scope="col">PAGO TOTAL BONOS</th>
                             <th scope="col">RETENCIONES</th>
@@ -54,6 +59,21 @@
                         </tr>
                     </thead>
                     <tbody id="datosVentas">
+                        <tr :key="index"
+                            :value="c.numEmpleado"
+                            v-for="(c, index) in datos">
+                            <td style="text-align: center; ">{{c.numEmpleado}}</td>
+                            <td style="text-align: center; ">{{c.nombre_empleado}}</td>
+                            <td style="text-align: center; ">{{c.rolId}}</td>
+                            @*<td style="text-align: center; ">{{self.fechaIni}}</td>*@
+                            <td style="text-align: center; ">{{c.horasTrabajadas}}</td>
+                            <td style="text-align: center; ">{{c.pagoTotalHoras}}</td>
+                            <td style="text-align: center; ">{{c.pagoTotalEntregas}}</td>
+                            <td style="text-align: center; ">{{c.pagoTotalBonos}}</td>
+                            <td style="text-align: center; ">{{c.retenciones}}</td>
+                            <td style="text-align: center; ">{{c.vales}}</td>
+                            <td style="text-align: center; ">{{c.sueldoTotal}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -71,8 +91,11 @@
 
                     return {
                         idCategoriaSeleccionada: 0,
+                        meses: [{ idMes: 1, mes: "Enero" }, { idMes: 2, mes: "Febrero" }, { idMes: 3, mes: "Marzo" }, { idMes: 4, mes: "Abril" },
+                        { idMes: 5, mes: "Mayo" }, { idMes: 6, mes: "Junio" }, { idMes: 7, mes: "Julio" }, { idMes: 8, mes: "Agosto" },
+                        { idMes: 9, mes: "Septiembre" }, { idMes: 10, mes: "Octubre" }, { idMes: 11, mes: "Noviembre" }, { idMes: 12, mes: "Diciembre" }],
                         fechaIni: '',
-                        fechaFin: '',
+                        datos:[],
                         file: [],
                         url: null,
                         message: "hola mundo desde vue",
@@ -81,24 +104,30 @@
                 },
                 methods: {
 
-                    vistaPrevia() {
-                        this.$bvModal.show('modal-vista-previa')
-                    },
+                    
                     ConsultarReporte: function () {
                         var self = this;
-                        if (self.fechaIni != '' && self.fechaFin != '') {
+                        if (self.fechaIni != '') {
 
-                            this.$http.get('../Empleados/ObtenerReporteEmpleadosGeneral?fechaIni=' + self.fechaIni + '&fechaFin=' + self.fechaFin).then(function (response) {
-                                alert('Se ha guardado el empleado correctamente!!');
-                            }, function () {
-                                alert(response);
-                            });
+                            this.$http.get('../Empleados/ObtenerReporteEmpleadosGeneral?fechaIni=' + self.fechaIni).then(function (response) {
 
+                                if (response.data.length > 0) {
+                                    self.datos = response.data;
+                                } else {
+                                    alert("No se encontraron datos!!");
+                                }
+                            })
                         } else {
                             alert('favor de introducir valores!!');
                         }
 
                     },
+                    limpiarDatos: function () {
+                        var self = this;
+                        self.fechaIni = '';
+                        self.datos = [];
+                     
+                    }
 
                 }
 

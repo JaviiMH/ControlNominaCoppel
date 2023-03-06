@@ -36,14 +36,14 @@ namespace ControlEmpleadosCoppel.Datos
             return dt;
         }
 
-        public static DataTable ReporteMovimientosEmpleados(string fechaIni, string fechaFin)
+        public static DataTable ReporteMovimientosEmpleados(string fechaIni)
         {
             DataTable dt = null;
             try
             {
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter("@fechaIni", fechaIni != null ? fechaIni : ""));
-                parametros.Add(new SqlParameter("@fechaFin", fechaFin != null ? fechaFin : ""));
+                //parametros.Add(new SqlParameter("@fechaFin", fechaFin != null ? fechaFin : ""));
                 dt = EjecutarSPConResultados(SP_ReporteMovimientosEmpleados, parametros.ToArray());
             }
             catch (Exception error)

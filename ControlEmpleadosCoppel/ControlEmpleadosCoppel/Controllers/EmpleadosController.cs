@@ -94,11 +94,11 @@ namespace ControlEmpleadosCoppel.Controllers
         {
             return View();
         }
-        public List<EmpleadosModel> ObtenerReporteEmpleadosGeneral(string fechaIni, string fechaFin)
+        public List<EmpleadosModel> ObtenerReporteEmpleadosGeneral(string fechaIni)
         {
             List<EmpleadosModel> modelList = new List<EmpleadosModel>();
 
-            DataTable dt = LogicaDatos.ReporteMovimientosEmpleados(fechaIni, fechaFin);
+            DataTable dt = LogicaDatos.ReporteMovimientosEmpleados(fechaIni);
             if (dt != null && dt.Rows.Count > 0)
             {
                 modelList = JsonConvert.DeserializeObject<List<EmpleadosModel>>(JsonConvert.SerializeObject(dt, Formatting.Indented));
