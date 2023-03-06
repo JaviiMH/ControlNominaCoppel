@@ -80,7 +80,7 @@
                 empleado: {
                     numEmpleado: '',
                     nombreEmpleado: '',
-                    rolId: 0
+                    rolId: 1
                 },
                 file: [],
                 url: null,
@@ -98,8 +98,13 @@
                         Nombre_empleado: self.empleado.nombreEmpleado,
                         RolId: self.empleado.rolId
                     }
-                    this.$http.get('../Empleados/GuardarEmpleados', data).then(function (response) {
-                        alert('Se ha guardado el empleado correctamente!!');
+                    this.$http.get('../Empleados/GuardarEmpleados?NumEmpleado=' + data.NumEmpleado + '&Nombre_empleado=' + data.Nombre_empleado + '&RolId=' + data.RolId).then(function (response) {
+                        if (response.ok) {
+                            alert('Se ha guardado el empleado correctamente!!');
+                            self.Cancelar();
+                        } else {
+                            alert('No se ha podido guardar el empleado !!');
+                        }
                     }, function () {
                         alert('Error al guardar empleado !!');
                     });
@@ -111,7 +116,8 @@
             },
 
             Cancelar() {
-    
+                var self = this;
+                self.empleado = [];
             }
         }
 

@@ -27,11 +27,11 @@ namespace ControlEmpleadosCoppel.Controllers
         {
             return View();
         }
-        public List<EmpleadosModel> GuardarEmpleados(EmpleadosModel model)
+        public List<EmpleadosModel> GuardarEmpleados(int NumEmpleado, string Nombre_empleado, int RolId)
         {
             List<EmpleadosModel> modelList = new List<EmpleadosModel>();
 
-            DataTable dt = LogicaDatos.AltaEmpleados(model);
+            DataTable dt = LogicaDatos.AltaEmpleados(NumEmpleado, Nombre_empleado,  RolId);
             if (dt != null && dt.Rows.Count > 0)
             {
                 modelList = JsonConvert.DeserializeObject<List<EmpleadosModel>>(JsonConvert.SerializeObject(dt, Formatting.Indented));
@@ -71,11 +71,11 @@ namespace ControlEmpleadosCoppel.Controllers
         {
             return View();
         }
-        public List<EmpleadosModel> GuardarCapturaMovimientoEmpleado(EmpleadosModel model)
+        public List<EmpleadosModel> GuardarCapturaMovimientoEmpleado(int NumEmpleado, string Nombre_empleado, int RolId, int MesID, int NumEntregas)
         {
             List<EmpleadosModel> modelList = new List<EmpleadosModel>();
 
-            DataTable dt = LogicaDatos.AltaEmpleados(model);
+            DataTable dt = LogicaDatos.CapturaMovimientoEmpleado(NumEmpleado, Nombre_empleado, RolId, MesID, NumEntregas);
             if (dt != null && dt.Rows.Count > 0)
             {
                 modelList = JsonConvert.DeserializeObject<List<EmpleadosModel>>(JsonConvert.SerializeObject(dt, Formatting.Indented));

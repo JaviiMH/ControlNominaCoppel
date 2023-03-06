@@ -11,7 +11,7 @@
 
         <div class="col-6 form-group row">
             <div class="col-6">
-                <label for="exampleFormControlSelect2">FECHA INICIO</label>
+                <label for="exampleFormControlSelect2">MES A CONSULTAR:</label>
                 <select class="form-control form-control-sm input-select"
                         v-model="fechaIni">
                     <option :value="0" disabled>Seleccione...</option>
@@ -59,7 +59,7 @@
                         </tr>
                     </thead>
                     <tbody id="datosVentas">
-                        <tr :key="index"
+                        <tr style="background-color:#808080;" :key="index"
                             :value="c.numEmpleado"
                             v-for="(c, index) in datos">
                             <td style="text-align: center; ">{{c.numEmpleado}}</td>

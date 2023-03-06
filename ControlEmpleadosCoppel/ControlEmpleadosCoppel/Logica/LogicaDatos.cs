@@ -23,13 +23,13 @@ namespace ControlEmpleadosCoppel.Logica
             return DBCatalogos.ReporteMovimientosEmpleados(fechaIni);
         }
         [HttpGet]
-        public static DataTable AltaEmpleados(EmpleadosModel empleado)
+        public static DataTable AltaEmpleados(int NumEmpleado, string Nombre_empleado, int RolId)
         {
-            return DBCatalogos.AltaEmpleados(empleado);
+            return DBCatalogos.AltaEmpleados( NumEmpleado,  Nombre_empleado,  RolId);
         }
-        public static DataTable CapturaMovimientoEmpleado(MovimientosModel model)
+        public static DataTable CapturaMovimientoEmpleado(int NumEmpleado, string Nombre_empleado, int RolId, int MesID, int NumEntregas)
         {
-            return DBCatalogos.CapturaMovimientoEmpleado(model);
+            return DBCatalogos.CapturaMovimientoEmpleado(NumEmpleado, Nombre_empleado, RolId, MesID, NumEntregas);
         }
        
     }
